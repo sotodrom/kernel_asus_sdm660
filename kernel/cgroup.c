@@ -2025,6 +2025,9 @@ static int cgroup_setup_root(struct cgroup_root *root, u16 ss_mask)
 	if (ret)
 		goto cancel_ref;
 
+	kf_sops = root == &cgrp_dfl_root ?
+		&cgroup_kf_syscall_ops : &cgroup1_kf_syscall_ops;
+
 	root->kf_root = kernfs_create_root(&cgroup_kf_syscall_ops,
 					   KERNFS_ROOT_CREATE_DEACTIVATED,
 					   root_cgrp);
