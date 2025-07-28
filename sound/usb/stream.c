@@ -286,6 +286,8 @@ static struct snd_pcm_chmap_elem *convert_chmap(int channels, unsigned int bits,
 		0 /* terminator */
 	};
 	struct snd_pcm_chmap_elem *chmap;
+	const unsigned int *maps;
+	int c;
 
 	if (channels > ARRAY_SIZE(chmap->map))
 		return NULL;
@@ -796,4 +798,3 @@ populate_fp:
 	}
 	return 0;
 }
-
