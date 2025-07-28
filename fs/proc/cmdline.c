@@ -29,8 +29,7 @@ static void proc_command_line_init(void) {
 static int cmdline_proc_show(struct seq_file *m, void *v)
 {
 #ifdef CONFIG_INITRAMFS_IGNORE_SKIP_FLAG
-	seq_puts(m, saved_command_line);
-	seq_putc(m, '\n');
+	seq_printf(m, "%s\n", proc_command_line);
 #else
 	seq_printf(m, "%s\n", saved_command_line);
 #endif
@@ -54,6 +53,7 @@ static int __init proc_cmdline_init(void)
 #ifdef CONFIG_INITRAMFS_IGNORE_SKIP_FLAG
 	proc_command_line_init();
 #endif
+
 	proc_create("cmdline", 0, NULL, &cmdline_proc_fops);
 	return 0;
 }
