@@ -74,14 +74,14 @@ exit:
 }
 #endif
 
-int commonfp_power_on()
+int commonfp_power_on(void)
 {
 	int ret = 0;
 /*#if USE_COMMON_PINCTRL
 	ret = pinctrl_select_pin(fp_g.fp_pinctrl,"commonfp_power_on");
 	if(ret)
 		goto exit;
-	
+
 	printk(KERN_INFO"power on OK!!!,ret:%d\n",ret);
 	return ret;
 #endif
@@ -93,14 +93,14 @@ exit:
 	return ret;
 }
 
-int commonfp_power_off()
+int commonfp_power_off(void)
 {
 /*	int ret = 0;
 #if USE_COMMON_PINCTRL
 	ret = pinctrl_select_pin(fp_g.fp_pinctrl,"commonfp_power_off");
 	if(ret)
 		goto exit;
-	
+
 	printk(KERN_INFO"power off OK!!!,ret:%d\n",ret);
 	return ret;
 #endif
@@ -140,7 +140,7 @@ int commonfp_hw_reset(int ms)
 	gpio_set_value(fp_g.rst_gpio, 0);
 	mdelay(ms);
 	gpio_set_value(fp_g.rst_gpio, 1);
-	mdelay(ms);	
+	mdelay(ms);
 #endif
 
 	printk(KERN_INFO"hw reset success,ret:%d\n",ret);
@@ -226,7 +226,7 @@ int get_reset_gpio_number(void)
 #endif
 
 static int fp_common_probe(struct platform_device *pdev)
-{	
+{
 	int ret ,i;
 	struct device *dev = &pdev->dev;
 	struct device_node *np = dev->of_node;
@@ -333,7 +333,6 @@ static int fp_common_remove(struct platform_device *pdev)
 	if (!fp_g.fp_pinctrl)
 	{
   	  	devm_pinctrl_put(fp_g.fp_pinctrl);
-		
 		dev_info(dev,"commonfp pinctrl release success");
 	}
 #else
@@ -342,7 +341,7 @@ static int fp_common_remove(struct platform_device *pdev)
 		devm_gpio_free(dev,fp_g.irq_gpio);
         dev_err(dev,"remove irq_gpio success\n");
 	}
-	
+
 	if (gpio_is_valid(fp_g.rst_gpio))
 	{
 		devm_gpio_free(dev,fp_g.rst_gpio);
